@@ -1,0 +1,3185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обучение работе с Process Mentor | Полное руководство</title>
+    <meta name="description" content="Подробное руководство по работе с инструментом Process Mentor: от покупки до настройки всех функций. Пошаговые инструкции с примерами.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0094d3;
+            --primary-dark: #007aad;
+            --accent: #00C7BE;
+            --success: #10B981;
+            --error: #EF4444;
+            --warning: #F59E0B;
+            --gradient-primary: linear-gradient(135deg, #0094d3 0%, #00C7BE 100%);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.12);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.16);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            color: #111827;
+            background: #FFFFFF;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+            justify-content: flex-end;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            max-height: 80px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            gap: 8px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary) !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 8px 24px rgba(0, 148, 211, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px rgba(0, 148, 211, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--primary) !important;
+            border: 2px solid rgba(0, 148, 211, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: var(--primary) !important;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary) !important;
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #FFFFFF !important;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 60px 0 80px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 50%, #FFFFFF 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(0, 148, 211, 0.08) 0%, transparent 70%);
+            top: -400px;
+            right: -200px;
+            animation: pulse 6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-size: 58px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 28px;
+            letter-spacing: -1.5px;
+            color: #111827;
+        }
+
+        .hero-content h1 .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 21px;
+            color: #4B5563;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            border-radius: 50px;
+            color: #374151;
+            font-weight: 600;
+            font-size: 14px;
+            border: 1px solid rgba(0, 148, 211, 0.2);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .badge-icon {
+            font-size: 20px;
+        }
+
+        /* Search Bar */
+        .search-section {
+            padding: 50px 0 30px;
+            background: #FFFFFF;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            font-size: 20px;
+            color: #9CA3AF;
+            pointer-events: none;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 60px 18px 56px;
+            border: 2px solid #E5E7EB;
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: inherit;
+            background: #F9FAFB;
+            transition: all 0.3s ease;
+            color: #111827;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #FFFFFF;
+            box-shadow: 0 0 0 4px rgba(0, 148, 211, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: #9CA3AF;
+        }
+
+        .search-clear {
+            position: absolute;
+            right: 20px;
+            width: 28px;
+            height: 28px;
+            background: rgba(0, 0, 0, 0.05);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #6B7280;
+            transition: all 0.2s ease;
+        }
+
+        .search-clear:hover {
+            background: rgba(0, 0, 0, 0.1);
+            transform: scale(1.1);
+        }
+
+        .search-clear.active {
+            display: flex;
+        }
+
+        .search-results-info {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 14px;
+            color: #6B7280;
+            min-height: 20px;
+        }
+
+        .search-highlight {
+            background: rgba(0, 148, 211, 0.2);
+            color: #111827;
+            font-weight: 600;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .tutorial-section.hidden {
+            display: none;
+        }
+
+        .accordion-item.hidden {
+            display: none;
+        }
+
+        /* Learning Navigation */
+        .learning-nav {
+            padding: 40px 0;
+            background: #F9FAFB;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .nav-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .nav-card {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 24px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0, 148, 211, 0.3);
+        }
+
+        .nav-card-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .nav-card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .nav-card-desc {
+            font-size: 14px;
+            color: #6B7280;
+            line-height: 1.5;
+        }
+
+        /* Learning Content */
+        .learning-content {
+            padding: 80px 0;
+            background: #FFFFFF;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            color: #111827;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 20px;
+            color: #6B7280;
+            margin-bottom: 70px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Tutorial Sections */
+        .tutorial-section {
+            margin-bottom: 60px;
+        }
+
+        .tutorial-header {
+            background: linear-gradient(135deg, rgba(0, 148, 211, 0.05) 0%, rgba(0, 199, 190, 0.05) 100%);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 32px;
+            border: 2px solid rgba(0, 148, 211, 0.1);
+        }
+
+        .tutorial-header h2 {
+            font-size: 36px;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .tutorial-header-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #FFFFFF;
+            flex-shrink: 0;
+        }
+
+        .tutorial-header p {
+            font-size: 18px;
+            color: #6B7280;
+            line-height: 1.7;
+        }
+
+        /* Accordion Styles */
+        .accordion-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .accordion-item {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(229, 231, 235, 0.5);
+            border-radius: 20px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item:hover {
+            border-color: rgba(0, 148, 211, 0.3);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .accordion-question {
+            padding: 24px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .accordion-question-content {
+            flex: 1;
+        }
+
+        .accordion-number {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background: rgba(0, 148, 211, 0.1);
+            color: var(--primary);
+            border-radius: 8px;
+            text-align: center;
+            line-height: 32px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-right: 12px;
+        }
+
+        .accordion-question-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .accordion-toggle {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(0, 148, 211, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .accordion-item.active .accordion-toggle {
+            transform: rotate(180deg);
+            background: var(--gradient-primary);
+            color: #FFFFFF;
+        }
+
+        .accordion-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .accordion-item.active .accordion-answer {
+            max-height: 3000px;
+        }
+
+        .accordion-answer-inner {
+            padding: 0 28px 24px;
+        }
+
+        .accordion-answer-text {
+            font-size: 15px;
+            color: #374151;
+            line-height: 1.7;
+        }
+
+        .accordion-answer-text strong {
+            color: #111827;
+            font-weight: 600;
+        }
+
+        .accordion-answer-text ul,
+        .accordion-answer-text ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        .accordion-answer-text li {
+            margin-bottom: 12px;
+            padding-left: 8px;
+        }
+
+        .accordion-answer-text code {
+            background: rgba(0, 148, 211, 0.05);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            color: var(--primary);
+        }
+
+        .info-box {
+            background: rgba(0, 148, 211, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .info-box-title {
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .warning-box {
+            background: rgba(245, 158, 11, 0.05);
+            border-left: 4px solid var(--warning);
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .warning-box-title {
+            font-weight: 700;
+            color: #92400E;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .success-box {
+            background: rgba(16, 185, 129, 0.05);
+            border-left: 4px solid var(--success);
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+
+        .success-box-title {
+            font-weight: 700;
+            color: #065F46;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Pro Badge */
+        .pro-badge {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: #FFFFFF;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 12px;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #0094d3 0%, #00C7BE 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-actions::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></svg>');
+            opacity: 0.3;
+        }
+
+        .quick-actions-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .quick-actions h2 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+        }
+
+        .quick-actions p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 32px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-white {
+            background: #FFFFFF !important;
+            color: var(--primary) !important;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
+            color: #9CA3AF;
+            padding: 60px 0 40px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 70px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            color: #FFFFFF !important;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #9CA3AF !important;
+            font-size: 15px;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #FFFFFF !important;
+            transform: translateX(4px);
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        /* Expand All Button */
+        .expand-all-container {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .btn-expand-all {
+            background: rgba(0, 148, 211, 0.1);
+            color: var(--primary);
+            border: 2px solid rgba(0, 148, 211, 0.2);
+            padding: 12px 28px;
+            font-size: 14px;
+        }
+
+        .btn-expand-all:hover {
+            background: rgba(0, 148, 211, 0.15);
+            border-color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 40px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .tutorial-header h2 {
+                font-size: 28px;
+            }
+
+            .nav-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .header-nav .btn-outline {
+                display: none;
+            }
+
+            .accordion-question {
+                padding: 20px;
+            }
+
+            .accordion-answer-inner {
+                padding: 0 20px 20px;
+            }
+        }
+        
+        .settings-screenshot {
+    max-width: 100%; /* Картинка не выйдет за пределы родителя */
+    height: auto;    /* Сохраняет пропорции */
+    display: block;  /* Убираем лишние отступы */
+    margin: 20px 0 25px; /* Отступы сверху, снизу от текста */
+    border-radius: 12px; /* Скругленные углы */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Мягкая тень */
+    border: 1px solid #e0e0e0; /* Легкая рамка */
+}
+
+/* Адаптив (на всякий случай, если надо будет чуть подкорректировать) */
+@media (max-width: 768px) {
+    .settings-screenshot {
+        margin: 15px 0 20px;
+    }
+}
+
+/* ... (существующие стили выше) ... */
+
+/* Обновленные стили для модального окна */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.3s ease;
+    padding: 20px;
+    box-sizing: border-box;
+    /* Добавляем flex для центрирования */
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.8) translate(-50%, -50%); opacity: 0; }
+    to { transform: scale(1) translate(-50%, -50%); opacity: 1; }
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: zoomIn 0.3s ease;
+    cursor: zoom-in;
+    transition: transform 0.3s ease;
+}
+
+.modal-content.zoomed {
+    /* При зуме оставляем центр в центре */
+    transform: translate(-50%, -50%) scale(1.5);
+    cursor: zoom-out;
+}
+
+.modal-close {
+    position: fixed; /* Изменено с absolute на fixed */
+    top: 25px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: 300;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.modal-caption {
+    position: fixed; /* Изменено с absolute на fixed */
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.7);
+    max-width: 600px;
+    width: 90%;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    z-index: 1001;
+}
+
+.modal-nav {
+    position: fixed; /* Изменено с absolute на fixed */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+    z-index: 1001;
+}
+
+.modal-nav-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.modal-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.modal-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Стиль для кликабельных изображений */
+.zoomable {
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.zoomable:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Уведомление о возможности увеличения */
+.zoom-hint {
+    font-size: 12px;
+    color: #6B7280;
+    text-align: center;
+    margin-top: -15px;
+    margin-bottom: 20px;
+    opacity: 0.8;
+}
+
+/* Адаптивность модального окна */
+@media (max-width: 768px) {
+    .modal-close {
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        font-size: 30px;
+    }
+
+    .modal-nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        margin: 0 10px;
+    }
+
+    .modal-caption {
+        bottom: 15px;
+        font-size: 14px;
+        padding: 10px 15px;
+        width: 95%;
+    }
+
+    .modal-content {
+        max-width: 95%;
+        max-height: 70%;
+    }
+    
+    .modal-content.zoomed {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+/* Дополнительные адаптивные стили для очень маленьких экранов */
+@media (max-width: 480px) {
+    .modal-content {
+        max-width: 98%;
+        max-height: 60%;
+    }
+    
+    .modal-caption {
+        bottom: 10px;
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+    
+    .modal-close {
+        top: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        font-size: 25px;
+    }
+    
+    .modal-nav-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+}
+
+/* Для предотвращения горизонтального скролла на мобильных */
+@media (max-width: 768px) {
+    .modal {
+        padding: 10px;
+    }
+}
+    </style>
+</head>
+<body>
+    
+     <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <div class="modal-nav">
+            <button class="modal-nav-btn" onclick="prevImage()" id="prevBtn">&#10094;</button>
+            <button class="modal-nav-btn" onclick="nextImage()" id="nextBtn">&#10095;</button>
+        </div>
+        <img class="modal-content" id="modalImage" onclick="toggleZoom()">
+        <div class="modal-caption" id="modalCaption"></div>
+    </div>
+    
+    
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="https://projectmentor.ru" class="logo" target="_blank">
+                    <img src="https://optim.tildacdn.com/tild3965-3039-4565-b766-623739653734/-/resize/317x/-/format/webp/IMG_20250529_205437-.png.webp"
+                         alt="Project mentor logo">
+                </a>
+                <div class="header-nav">
+    <a href="https://projectmentor.ru/pm_pro" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Войти в PM</a>
+    <a href="https://t.me/inozemtsev_ba" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Написать в поддержку</a>
+</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Центр обучения <p></p> <span class="highlight">PROCESS MENTOR</span></h1>
+                <p>Полное руководство по работе с инструментом оценки процессов. От первого входа до профессионального использования всех функций.</p>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Bar -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <span class="search-icon">&#x1F50D;</span>
+                    <input
+                        type="text"
+                        class="search-input"
+                        id="searchInput"
+                        placeholder="Поиск по обучающим материалам..."
+                        autocomplete="off"
+                    >
+                    <button class="search-clear" id="searchClear" onclick="clearSearch()">&times;</button>
+                </div>
+                <div class="search-results-info" id="searchResults"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Navigation -->
+    <section class="learning-nav">
+        <div class="container">
+            <div class="nav-cards">
+                <a href="#purchase" class="nav-card">
+                    <span class="nav-card-icon">&#x1F4B3;</span>
+                    <div class="nav-card-title">Покупка и доступ</div>
+                    <div class="nav-card-desc">Как приобрести тариф и получить доступ к системе</div>
+                </a>
+                <a href="#first-login" class="nav-card">
+                    <span class="nav-card-icon">&#x1F6AA;</span>
+                    <div class="nav-card-title">Первый вход</div>
+                    <div class="nav-card-desc">Знакомство с интерфейсом и базовые настройки</div>
+                </a>
+                <a href="#interface" class="nav-card">
+                    <span class="nav-card-icon">&#x1F3A8;</span>
+                    <div class="nav-card-title">Обзор интерфейса</div>
+                    <div class="nav-card-desc">Все разделы и элементы управления</div>
+                </a>
+                <a href="#participants" class="nav-card">
+                    <span class="nav-card-icon">&#x1F465;</span>
+                    <div class="nav-card-title">Настройка участников</div>
+                    <div class="nav-card-desc">Добавление ролей, ставок и ресурсов</div>
+                </a>
+                <a href="#recources" class="nav-card">
+                    <span class="nav-card-icon">&#x1F4E6;</span>
+                    <div class="nav-card-title">Работа с ресурсами</div>
+                    <div class="nav-card-desc">Добавление и работа с входящими и выходящими ресурсами</div>
+                </a>
+                <a href="#process" class="nav-card">
+                    <span class="nav-card-icon">&#x2699;</span>
+                    <div class="nav-card-title">Создание процесса</div>
+                    <div class="nav-card-desc">Моделирование бизнес-процессов</div>
+                </a>
+                <a href="#calculations" class="nav-card">
+                    <span class="nav-card-icon">&#x1F4CA;</span>
+                    <div class="nav-card-title">Расчеты и анализ</div>
+                    <div class="nav-card-desc">Получение метрик и аналитики</div>
+                </a>
+                <a href="#export" class="nav-card">
+                    <span class="nav-card-icon">&#x1F4BE;</span>
+                    <div class="nav-card-title">Сохранение данных</div>
+                    <div class="nav-card-desc">Экспорт проектов и отчетов</div>
+                </a>
+                <a href="#pro-features" class="nav-card">
+                    <span class="nav-card-icon">&#x2B50;</span>
+                    <div class="nav-card-title">PRO функции</div>
+                    <div class="nav-card-desc">Продвинутые возможности тарифа PRO</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Content -->
+    <section class="learning-content">
+        <div class="container">
+            <!-- Section 1: Purchase -->
+            <div class="tutorial-section" id="purchase">
+                <div class="tutorial-header">
+                    <h2>
+                        <span class="tutorial-header-icon">&#x1F4B3;</span>
+                        Покупка и получение доступа
+                    </h2>
+                    <p>Узнайте, как приобрести подходящий тариф и получить мгновенный доступ к инструменту</p>
+                </div>
+
+                <div class="expand-all-container">
+                    <button class="btn btn-expand-all" onclick="toggleAllAccordions('purchase')">Развернуть все</button>
+                </div>
+
+                <div class="accordion-container">
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">1</span>
+                                <span class="accordion-question-text">Какие тарифы доступны?</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p>Process Mentor предлагает два тарифа:</p>
+                                    
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4BC; BASE - 1 499₽/мес</div>
+                                        <ul>
+                                            <li>Визуальное моделирование процессов</li>
+                                            <li>3 сценария расчета (Min/Max/Прогноз)</li>
+                                            <li>Анализ эффективности и нагрузки (FTE)</li>
+                                            <li>Учет ресурсов и ставок участников</li>
+                                            <li>Локальное хранение данных</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="success-box">
+                                        <div class="success-box-title">&#x2B50; PRO - 3 499₽/мес</div>
+                                        <ul>
+                                            <li>Все функции тарифа BASE</li>
+                                            <li>Цепочки создания ценности (Value Stream)</li>
+                                            <li>Глубокая аналитика по этапам</li>
+                                            <li>Поиск узких мест и бутылочных горлышек</li>
+                                            <li>Детальные финансовые отчеты</li>
+                                            <li>Приоритетная поддержка</li>
+                                        </ul>
+                                    </div>
+
+                                    <p><strong>Рекомендация:</strong> Если вы только начинаете работу с оцифровкой процессов - начните с BASE. PRO подходит для компаний с развитой процессной моделью.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">2</span>
+                                <span class="accordion-question-text">Как купить тариф?</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Процесс покупки занимает 2-3 минуты:</strong></p>
+                                    
+                                    <ol>
+                                        <li>На странице инструмента нажмите кнопку <code>Выбрать BASE</code> или <code>Выбрать PRO</code></li>
+                                        <li>Вы будете перенаправлены в Telegram к менеджеру</li>
+                                        <li>Менеджер отправит вам ссылку на оплату</li>
+                                        <li>После оплаты вы получите:
+                                            <ul>
+                                                <li>Ссылку для входа в систему</li>
+                                                <li>Логин и временный пароль</li>
+                                                <li>Доступ к центру обучения</li>
+                                            </ul>
+                                        </li>
+                                    </ol>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Важно</div>
+                                        Доступ открывается автоматически в течение 5 минут после подтверждения оплаты. Сохраните данные для входа в надежном месте.
+                                    </div>
+
+                                    <div class="warning-box">
+                                        <div class="warning-box-title">&#x26A0; Обратите внимание</div>
+                                        Подписка продлевается автоматически каждый месяц. Вы можете отключить автопродление в любой момент в личном кабинете.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">3</span>
+                                <span class="accordion-question-text">Можно ли протестировать перед покупкой?</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Да! Мы предлагаем два варианта тестирования:</strong></p>
+
+                                    <div class="success-box">
+                                        <div class="success-box-title">&#x1F381; 7-дневный PRO доступ</div>
+                                        <p>Полный доступ ко всем функциям PRO тарифа на неделю. Этого времени достаточно, чтобы смоделировать 2-3 процесса и оценить возможности инструмента.</p>
+                                        <p><strong>Как получить:</strong> Нажмите "Получить 7-дневный доступ" на главной странице и заполните форму.</p>
+                                    </div>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F3AF; Персональная демонстрация</div>
+                                        <p>Созвон с экспертом (30-40 минут), где вы увидите работу инструмента на реальных примерах и получите ответы на все вопросы.</p>
+                                        <p><strong>Как получить:</strong> Напишите в Telegram <a href="https://t.me/inozemtsev_ba" target="_blank" style="color: var(--primary); text-decoration: underline;">@inozemtsev_ba</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">4</span>
+                                <span class="accordion-question-text">Какие способы оплаты доступны?</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Мы принимаем следующие способы оплаты:</strong></p>
+                                    
+                                    <ul>
+                                        <li><strong>Банковские карты (РФ):</strong> Visa, MasterCard, МИР</li>
+                                        <li><strong>СБП:</strong> Мгновенный перевод по номеру телефона</li>
+                                        <li><strong>Юридические лица:</strong> Выставление счета и оплата по реквизитам</li>
+                                        <li><strong>Криптовалюта:</strong> USDT (TRC-20) - по запросу</li>
+                                    </ul>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Для корпоративных клиентов</div>
+                                        При оплате от юридического лица мы предоставляем:
+                                        <ul>
+                                            <li>Договор оказания услуг</li>
+                                            <li>Счет на оплату</li>
+                                            <li>Акт выполненных работ</li>
+                                            <li>Возможность оплаты за год со скидкой 15%</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: First Login -->
+            <div class="tutorial-section" id="first-login">
+                <div class="tutorial-header">
+                    <h2>
+                        <span class="tutorial-header-icon">&#x1F6AA;</span>
+                        Первый вход в систему
+                    </h2>
+                    <p>Пошаговая инструкция для первого запуска и базовой настройки</p>
+                </div>
+
+                <div class="expand-all-container">
+                    <button class="btn btn-expand-all" onclick="toggleAllAccordions('first-login')">Развернуть все</button>
+                </div>
+
+                <div class="accordion-container">
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">1</span>
+                                <span class="accordion-question-text">Как войти в систему?</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Шаги для первого входа:</strong></p>
+                                    
+                                    <ol>
+                                        <li>Откройте ссылку, которую вы получили после оплаты:
+                                            <ul>
+                                                <li>BASE: <code>https://projectmentor.ru/pm_base</code></li>
+                                                <li>PRO: <code>https://projectmentor.ru/pm_pro</code></li>
+                                            </ul>
+                                        </li>
+                                        <li>Введите логин и временный пароль из письма</li>
+                                        <li>При первом входе система попросит изменить пароль на постоянный</li>
+                                        <li>Установите новый пароль (минимум 8 символов, буквы и цифры)</li>
+                                        <li>Готово! Вы в системе</li>
+                                    </ol>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Рекомендация</div>
+                                        Используйте менеджер паролей (1Password, Bitwarden) для хранения данных доступа. Это безопаснее, чем записывать в заметки.
+                                    </div>
+
+                                    <div class="warning-box">
+                                        <div class="warning-box-title">&#x26A0; Не получили данные для входа?</div>
+                                        Проверьте папку "Спам" в почте или напишите в поддержку: <a href="https://t.me/inozemtsev_ba" target="_blank" style="color: #92400E; text-decoration: underline;">Telegram</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">2</span>
+                                <span class="accordion-question-text">Что вы увидите после входа?</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Главный экран (Dashboard) состоит из:</strong></p>
+
+                                    <ul>
+                                        <li><strong>Верхняя панель навигации:</strong>
+                                            <ul>
+                                                <li>Логотип и название проекта</li>
+                                                <li>Кнопки быстрого доступа</li>
+                                                <li>Ваш профиль и настройки</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Боковое меню (слева):</strong>
+                                            <ul>
+                                                <li>Мои процессы</li>
+                                                <li>Участники команды</li>
+                                                <li>Аналитика</li>
+                                                <li>Настройки</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Центральная область:</strong>
+                                            <ul>
+                                                <li>Приветственное окно</li>
+                                                <li>Быстрый старт (Quick Start Guide)</li>
+                                                <li>Шаблоны процессов</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                                    <div class="success-box">
+                                        <div class="success-box-title">&#x2728; Интерактивное обучение</div>
+                                        При первом входе запустится интерактивный гайд, который покажет все основные элементы интерфейса. Рекомендуем пройти его (занимает 3-4 минуты).
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">3</span>
+                                <span class="accordion-question-text">Базовая настройка профиля</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Рекомендуется настроить:</strong></p>
+                        
+                                    <ol>
+                                        <li><strong>Профиль пользователя:</strong>
+                                            <ul>
+                                                <li>Ваше имя и должность</li>
+                                                <li>Email для уведомлений</li>
+                                                <li>Часовой пояс</li>
+                                                <li>Язык интерфейса (русский/английский)</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Настройки компании:</strong>
+                                            <ul>
+                                                <li>Название организации</li>
+                                                <li>Валюта по умолчанию (₽, $, €)</li>
+                                                <li>Формат дат и чисел</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Уведомления:</strong>
+                                            <ul>
+                                                <li>Email-оповещения о расчетах</li>
+                                                <li>Напоминания о неоконченных проектах</li>
+                                            </ul>
+                                        </li>
+                                    </ol>
+                        
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Где это находится?</div>
+                                        <img src="https://static.tildacdn.com/tild3836-6565-4530-b139-623333333664/image.png" alt="Скриншот настроек профиля" class="settings-screenshot">
+                                        Нажмите на иконку вашего профиля в правом верхнем углу → "Настройки" → "Профиль и компания"
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Interface Overview -->
+            <div class="tutorial-section" id="interface">
+                <div class="tutorial-header">
+                    <h2>
+                        <span class="tutorial-header-icon">&#x1F3A8;</span>
+                        Обзор интерфейса
+                    </h2>
+                    <p>Детальное описание всех разделов и элементов управления</p>
+                </div>
+
+                <div class="expand-all-container">
+                    <button class="btn btn-expand-all" onclick="toggleAllAccordions('interface')">Развернуть все</button>
+                </div>
+
+                <div class="accordion-container">
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">1</span>
+                                <span class="accordion-question-text">Главное меню и навигация</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Боковое меню содержит следующие разделы:</strong></p>
+
+                                    <ul>
+                                        <li><strong>&#x1F4CA; Dashboard (Главная):</strong> Общая сводка по всем процессам, ключевые метрики</li>
+                                        <li><strong>&#x2699; Мои процессы:</strong> Список всех созданных процессов и моделей</li>
+                                        <li><strong>&#x1F465; Участники:</strong> Управление ролями, ставками и доступным ресурсом</li>
+                                        <li><strong>&#x1F4C8; Аналитика:</strong> Детальные отчеты, графики, сравнение процессов</li>
+                                        <li><strong>&#x1F4BE; Проекты:</strong> Сохраненные проекты для быстрого доступа</li>
+                                        <li><strong>&#x2B50; Value Stream (PRO):</strong> Цепочки создания ценности</li>
+                                        <li><strong>&#x2699; Настройки:</strong> Профиль, уведомления, экспорт данных</li>
+                                        <li><strong>❓ Помощь:</strong> Документация, видео, поддержка</li>
+                                    </ul>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Быстрая навигация</div>
+                                        Используйте горячие клавиши:
+                                        <ul>
+                                            <li><code>G + D</code> - Dashboard</li>
+                                            <li><code>G + P</code> - Процессы</li>
+                                            <li><code>G + T</code> - Участники (Team)</li>
+                                            <li><code>G + A</code> - Аналитика</li>
+                                            <li><code>N</code> - Новый процесс</li>
+                                            <li><code>?</code> - Показать все горячие клавиши</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">2</span>
+                                <span class="accordion-question-text">Панель инструментов (Toolbar)</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Верхняя панель содержит:</strong></p>
+
+                                    <ul>
+                                        <li><strong>Кнопка "Создать":</strong> Быстрое создание нового процесса или участника</li>
+                                        <li><strong>Поиск:</strong> Поиск по процессам, участникам, задачам</li>
+                                        <li><strong>Уведомления:</strong> Оповещения о завершенных расчетах</li>
+                                        <li><strong>Быстрые действия:</strong>
+                                            <ul>
+                                                <li>Сохранить проект</li>
+                                                <li>Экспорт в JSON</li>
+                                                <li>Поделиться ссылкой (PRO)</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Профиль:</strong> Настройки, выход, информация о тарифе</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">3</span>
+                                <span class="accordion-question-text">Рабочая область (Canvas)</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Основная область для работы с процессами:</strong></p>
+
+                                    <ul>
+                                        <li><strong>Визуальный редактор:</strong>
+                                            <ul>
+                                                <li>Drag & Drop элементов</li>
+                                                <li>Масштабирование (Zoom)</li>
+                                                <li>Сетка для выравнивания</li>
+                                                <li>Автоматическая компоновка</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Панель элементов (слева):</strong>
+                                            <ul>
+                                                <li>Задачи (Tasks)</li>
+                                                <li>Шлюзы (Gateways)</li>
+                                                <li>События (Events)</li>
+                                                <li>Пулы и дорожки (Swimlanes)</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Панель свойств (справа):</strong>
+                                            <ul>
+                                                <li>Настройки выбранного элемента</li>
+                                                <li>Назначение участников</li>
+                                                <li>Установка времени и стоимости</li>
+                                                <li>Комментарии и метаданные</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                                    <div class="success-box">
+                                        <div class="success-box-title">&#x2728; Умная помощь</div>
+                                        Система автоматически подсказывает, какой элемент лучше использовать в текущей ситуации. Следите за подсказками в правом нижнем углу!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Participants -->
+            <div class="tutorial-section" id="participants">
+                <div class="tutorial-header">
+                    <h2>
+                        <span class="tutorial-header-icon">&#x1F465;</span>
+                        Настройка участников процесса
+                    </h2>
+                    <p>Как добавлять роли, устанавливать ставки и рассчитывать доступный ресурс</p>
+                </div>
+
+                <div class="expand-all-container">
+                    <button class="btn btn-expand-all" onclick="toggleAllAccordions('participants')">Развернуть все</button>
+                </div>
+
+                <div class="accordion-container">
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">1</span>
+                                <span class="accordion-question-text">Как добавить участника?</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Пошаговая инструкция:</strong></p>
+
+                                    <ol>
+                                        <li>Перейдите в раздел <strong>"Участники"</strong> в боковом меню</li>
+                                        <li>Нажмите кнопку <code>+ Добавить участника</code></li>
+                                        <li>Заполните обязательные поля:
+                                            <ul>
+                                                <li><strong>Название роли:</strong> Например, "Менеджер по продажам"</li>
+                                                <li><strong>Часовая ставка:</strong> Зарплата в час (₽/час)</li>
+                                                <li><strong>Доступный ресурс:</strong> Сколько часов в неделю/месяц доступно</li>
+                                            </ul>
+                                        </li>
+                                        <li>Опционально:
+                                            <ul>
+                                                <li>ФИО конкретного сотрудника</li>
+                                                <li>Департамент/отдел</li>
+                                                <li>Email для уведомлений</li>
+                                                <li>Цвет для визуального отличия на схеме</li>
+                                            </ul>
+                                        </li>
+                                        <li>Нажмите <code>Сохранить</code></li>
+                                    </ol>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Как рассчитать часовую ставку?</div>
+                                        <strong>Формула:</strong> (Месячная зарплата) ÷ (Рабочих часов в месяц)<br>
+                                        <strong>Пример:</strong> 100 000₽ ÷ 160 часов = 625₽/час
+                                    </div>
+
+                                    <div class="warning-box">
+                                        <div class="warning-box-title">&#x26A0; Конфиденциальность</div>
+                                        Все данные о ставках хранятся локально на вашем устройстве и не передаются на сервер. Мы не имеем доступа к финансовой информации.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">2</span>
+                                <span class="accordion-question-text">Что такое FTE и как его рассчитать?</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>FTE (Full-Time Equivalent)</strong> - это показатель полной занятости сотрудника.</p>
+
+                                    <ul>
+                                        <li><strong>1.0 FTE</strong> = полная занятость (40 часов в неделю, 160 часов в месяц)</li>
+                                        <li><strong>0.5 FTE</strong> = половина ставки (20 часов в неделю)</li>
+                                        <li><strong>1.5 FTE</strong> = полторы ставки (перегрузка, 60 часов в неделю)</li>
+                                    </ul>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4CA; Как система рассчитывает FTE?</div>
+                                        <p><strong>Формула:</strong> FTE = (Время на процесс) ÷ (Доступный ресурс)</p>
+                                        <p><strong>Пример:</strong></p>
+                                        <ul>
+                                            <li>Менеджер тратит 80 часов в месяц на процесс</li>
+                                            <li>Его доступный ресурс = 160 часов</li>
+                                            <li>FTE = 80 ÷ 160 = 0.5 (50% занятости)</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="success-box">
+                                        <div class="success-box-title">&#x2728; Автоматический расчет</div>
+                                        Система автоматически рассчитывает FTE для каждого участника на основе их задач в процессе. Следите за цветовыми индикаторами:
+                                        <ul>
+                                            <li><strong>Зеленый:</strong> FTE < 0.8 (есть свободный ресурс)</li>
+                                            <li><strong>Желтый:</strong> FTE 0.8-1.0 (оптимальная загрузка)</li>
+                                            <li><strong>Красный:</strong> FTE > 1.0 (перегрузка!)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">3</span>
+                                <span class="accordion-question-text">Управление группами и командами</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Вы можете создавать группы участников для удобства:</strong></p>
+
+                                    <ul>
+                                        <li><strong>По отделам:</strong> Продажи, Маркетинг, IT, HR</li>
+                                        <li><strong>По проектам:</strong> Проект А, Проект Б</li>
+                                        <li><strong>По уровню:</strong> Junior, Middle, Senior</li>
+                                    </ul>
+
+                                    <p><strong>Как создать группу:</strong></p>
+                                    <ol>
+                                        <li>В разделе "Участники" нажмите <code>Создать группу</code></li>
+                                        <li>Укажите название и описание</li>
+                                        <li>Добавьте участников в группу</li>
+                                        <li>Теперь можно назначать на задачу всю группу сразу</li>
+                                    </ol>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Зачем это нужно?</div>
+                                        При назначении группы на задачу, система равномерно распределит нагрузку между всеми участниками группы, учитывая их доступный ресурс.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Section 4,5: Recources -->
+            <div class="tutorial-section" id="recources">
+                <div class="tutorial-header">
+                    <h2>
+                        <span class="tutorial-header-icon">&#x1F4E6;</span>
+                        Настройка участников процесса
+                    </h2>
+                    <p>Как добавлять роли, устанавливать ставки и рассчитывать доступный ресурс</p>
+                </div>
+
+                <div class="expand-all-container">
+                    <button class="btn btn-expand-all" onclick="toggleAllAccordions('recources')">Развернуть все</button>
+                </div>
+
+                <div class="accordion-container">
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">1</span>
+                                <span class="accordion-question-text">Как добавить участника?</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Пошаговая инструкция:</strong></p>
+
+                                    <ol>
+                                        <li>Перейдите в раздел <strong>"Участники"</strong> в боковом меню</li>
+                                        <li>Нажмите кнопку <code>+ Добавить участника</code></li>
+                                        <li>Заполните обязательные поля:
+                                            <ul>
+                                                <li><strong>Название роли:</strong> Например, "Менеджер по продажам"</li>
+                                                <li><strong>Часовая ставка:</strong> Зарплата в час (₽/час)</li>
+                                                <li><strong>Доступный ресурс:</strong> Сколько часов в неделю/месяц доступно</li>
+                                            </ul>
+                                        </li>
+                                        <li>Опционально:
+                                            <ul>
+                                                <li>ФИО конкретного сотрудника</li>
+                                                <li>Департамент/отдел</li>
+                                                <li>Email для уведомлений</li>
+                                                <li>Цвет для визуального отличия на схеме</li>
+                                            </ul>
+                                        </li>
+                                        <li>Нажмите <code>Сохранить</code></li>
+                                    </ol>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Как рассчитать часовую ставку?</div>
+                                        <strong>Формула:</strong> (Месячная зарплата) ÷ (Рабочих часов в месяц)<br>
+                                        <strong>Пример:</strong> 100 000₽ ÷ 160 часов = 625₽/час
+                                    </div>
+
+                                    <div class="warning-box">
+                                        <div class="warning-box-title">&#x26A0; Конфиденциальность</div>
+                                        Все данные о ставках хранятся локально на вашем устройстве и не передаются на сервер. Мы не имеем доступа к финансовой информации.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">2</span>
+                                <span class="accordion-question-text">Что такое FTE и как его рассчитать?</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>FTE (Full-Time Equivalent)</strong> - это показатель полной занятости сотрудника.</p>
+
+                                    <ul>
+                                        <li><strong>1.0 FTE</strong> = полная занятость (40 часов в неделю, 160 часов в месяц)</li>
+                                        <li><strong>0.5 FTE</strong> = половина ставки (20 часов в неделю)</li>
+                                        <li><strong>1.5 FTE</strong> = полторы ставки (перегрузка, 60 часов в неделю)</li>
+                                    </ul>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4CA; Как система рассчитывает FTE?</div>
+                                        <p><strong>Формула:</strong> FTE = (Время на процесс) ÷ (Доступный ресурс)</p>
+                                        <p><strong>Пример:</strong></p>
+                                        <ul>
+                                            <li>Менеджер тратит 80 часов в месяц на процесс</li>
+                                            <li>Его доступный ресурс = 160 часов</li>
+                                            <li>FTE = 80 ÷ 160 = 0.5 (50% занятости)</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="success-box">
+                                        <div class="success-box-title">&#x2728; Автоматический расчет</div>
+                                        Система автоматически рассчитывает FTE для каждого участника на основе их задач в процессе. Следите за цветовыми индикаторами:
+                                        <ul>
+                                            <li><strong>Зеленый:</strong> FTE < 0.8 (есть свободный ресурс)</li>
+                                            <li><strong>Желтый:</strong> FTE 0.8-1.0 (оптимальная загрузка)</li>
+                                            <li><strong>Красный:</strong> FTE > 1.0 (перегрузка!)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">3</span>
+                                <span class="accordion-question-text">Управление группами и командами</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Вы можете создавать группы участников для удобства:</strong></p>
+
+                                    <ul>
+                                        <li><strong>По отделам:</strong> Продажи, Маркетинг, IT, HR</li>
+                                        <li><strong>По проектам:</strong> Проект А, Проект Б</li>
+                                        <li><strong>По уровню:</strong> Junior, Middle, Senior</li>
+                                    </ul>
+
+                                    <p><strong>Как создать группу:</strong></p>
+                                    <ol>
+                                        <li>В разделе "Участники" нажмите <code>Создать группу</code></li>
+                                        <li>Укажите название и описание</li>
+                                        <li>Добавьте участников в группу</li>
+                                        <li>Теперь можно назначать на задачу всю группу сразу</li>
+                                    </ol>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Зачем это нужно?</div>
+                                        При назначении группы на задачу, система равномерно распределит нагрузку между всеми участниками группы, учитывая их доступный ресурс.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Section 5: Process Creation -->
+            <div class="tutorial-section" id="process">
+                <div class="tutorial-header">
+                    <h2>
+                        <span class="tutorial-header-icon">&#x2699;</span>
+                        Создание и моделирование процесса
+                    </h2>
+                    <p>Подробное руководство по построению бизнес-процессов в визуальном редакторе</p>
+                </div>
+
+                <div class="expand-all-container">
+                    <button class="btn btn-expand-all" onclick="toggleAllAccordions('process')">Развернуть все</button>
+                </div>
+
+                <div class="accordion-container">
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">1</span>
+                                <span class="accordion-question-text">Создание нового процесса</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Два способа создания процесса:</strong></p>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F3AF; Способ 1: С нуля</div>
+                                        <ol>
+                                            <li>Нажмите <code>+ Новый процесс</code> в верхней панели</li>
+                                            <li>Введите название процесса (например, "Обработка заказа")</li>
+                                            <li>Опционально: добавьте описание и теги</li>
+                                            <li>Нажмите <code>Создать</code></li>
+                                            <li>Откроется пустой редактор - начинайте моделирование!</li>
+                                        </ol>
+                                    </div>
+
+                                    <div class="success-box">
+                                        <div class="success-box-title">&#x1F4CB; Способ 2: Из шаблона</div>
+                                        <ol>
+                                            <li>В разделе "Мои процессы" нажмите <code>Создать из шаблона</code></li>
+                                            <li>Выберите подходящий шаблон:
+                                                <ul>
+                                                    <li>Продажи (Lead to Cash)</li>
+                                                    <li>Подбор персонала</li>
+                                                    <li>Обработка заказа</li>
+                                                    <li>Поддержка клиентов</li>
+                                                    <li>Разработка продукта</li>
+                                                </ul>
+                                            </li>
+                                            <li>Система создаст процесс с базовой структурой</li>
+                                            <li>Адаптируйте его под свои нужды</li>
+                                        </ol>
+                                    </div>
+
+                                    <p><strong>Рекомендация:</strong> Новичкам стоит начать с шаблона, чтобы понять логику построения процессов.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">2</span>
+                                <span class="accordion-question-text">Элементы процесса: задачи и этапы</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Основные элементы для построения процесса:</strong></p>
+
+                                    <ul>
+                                        <li><strong>&#x1F4CB; Задача (Task):</strong>
+                                            <ul>
+                                                <li>Базовый элемент процесса</li>
+                                                <li>Представляет конкретное действие</li>
+                                                <li>Имеет исполнителя, время, стоимость</li>
+                                                <li>Пример: "Обработать заявку", "Провести встречу"</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>&#x25C7; Шлюз (Gateway):</strong>
+                                            <ul>
+                                                <li>Точка принятия решения</li>
+                                                <li>Разделяет процесс на несколько ветвей</li>
+                                                <li>Типы: И/ИЛИ/ИСКЛЮЧАЮЩЕЕ ИЛИ</li>
+                                                <li>Пример: "Клиент одобрил?" → Да/Нет</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>&#x25CB; Событие (Event):</strong>
+                                            <ul>
+                                                <li>Начало или конец процесса</li>
+                                                <li>Триггер или результат</li>
+                                                <li>Пример: "Получена заявка", "Заказ отправлен"</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>&#x25AD; Пул/Дорожка (Swimlane):</strong>
+                                            <ul>
+                                                <li>Группировка задач по отделам</li>
+                                                <li>Визуально разделяет зоны ответственности</li>
+                                                <li>Пример: "Отдел продаж", "Бухгалтерия"</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Как добавить элемент?</div>
+                                        <ol>
+                                            <li>Выберите элемент на левой панели</li>
+                                            <li>Перетащите его на рабочую область (Drag & Drop)</li>
+                                            <li>Или кликните на Canvas, появится меню выбора</li>
+                                            <li>Двойной клик на элемент - редактирование</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">3</span>
+                                <span class="accordion-question-text">Настройка параметров задачи</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Для каждой задачи настройте:</strong></p>
+
+                                    <ol>
+                                        <li><strong>Название и описание:</strong>
+                                            <ul>
+                                                <li>Краткое название (отображается на схеме)</li>
+                                                <li>Детальное описание (для комментариев)</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Исполнитель:</strong>
+                                            <ul>
+                                                <li>Выберите участника или группу из списка</li>
+                                                <li>Можно назначить нескольких исполнителей</li>
+                                                <li>Система автоматически учтет их ставки</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Время выполнения (3 сценария):</strong>
+                                            <ul>
+                                                <li><strong>Минимум:</strong> Лучший вариант (все идет отлично)</li>
+                                                <li><strong>Максимум:</strong> Худший вариант (проблемы, задержки)</li>
+                                                <li><strong>Прогноз:</strong> Наиболее вероятный вариант</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Дополнительные расходы (опционально):</strong>
+                                            <ul>
+                                                <li>Материалы</li>
+                                                <li>Лицензии</li>
+                                                <li>Подрядчики</li>
+                                            </ul>
+                                        </li>
+                                    </ol>
+
+                                    <div class="warning-box">
+                                        <div class="warning-box-title">&#x26A0; Важно</div>
+                                        <strong>Прогноз</strong> должен быть между Минимумом и Максимумом. Система автоматически проверит корректность данных и предупредит об ошибках.
+                                    </div>
+
+                                    <div class="success-box">
+                                        <div class="success-box-title">&#x2728; Автоматический расчет стоимости</div>
+                                        Стоимость задачи рассчитывается автоматически:
+                                        <p><strong>Формула:</strong> (Время × Часовая ставка) + Дополнительные расходы</p>
+                                        <p><strong>Пример:</strong> 2 часа × 625₽/час + 500₽ материалы = 1750₽</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">4</span>
+                                <span class="accordion-question-text">Связывание элементов и построение потока</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Как соединить элементы процесса:</strong></p>
+
+                                    <ol>
+                                        <li><strong>Создание связи:</strong>
+                                            <ul>
+                                                <li>Наведите курсор на элемент</li>
+                                                <li>Появятся точки подключения (якоря)</li>
+                                                <li>Кликните и протяните стрелку к следующему элементу</li>
+                                                <li>Или используйте кнопку "Соединить" на панели</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Типы связей:</strong>
+                                            <ul>
+                                                <li><strong>Последовательный поток:</strong> Задачи идут одна за другой</li>
+                                                <li><strong>Параллельный поток:</strong> Задачи выполняются одновременно</li>
+                                                <li><strong>Условный поток:</strong> Следующий шаг зависит от результата</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Редактирование связи:</strong>
+                                            <ul>
+                                                <li>Кликните на стрелку</li>
+                                                <li>Можно добавить условие перехода</li>
+                                                <li>Или вероятность выбора пути (для аналитики)</li>
+                                            </ul>
+                                        </li>
+                                    </ol>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Правила хорошего процесса</div>
+                                        <ul>
+                                            <li>У каждого процесса должно быть <strong>одно начало</strong></li>
+                                            <li>Может быть <strong>несколько концов</strong> (разные результаты)</li>
+                                            <li>Избегайте <strong>циклов</strong> (задача возвращается к предыдущей)</li>
+                                            <li>После шлюза должны быть <strong>все ветви закрыты</strong></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="success-box">
+                                        <div class="success-box-title">&#x2728; Автоматическая валидация</div>
+                                        Система проверяет корректность процесса в реальном времени:
+                                        <ul>
+                                            <li>&#x274C; Незакрытые ветви</li>
+                                            <li>&#x274C; Элементы без связей</li>
+                                            <li>&#x274C; Бесконечные циклы</li>
+                                            <li>✅ Все ошибки подсвечиваются красным</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Calculations -->
+            <div class="tutorial-section" id="calculations">
+                <div class="tutorial-header">
+                    <h2>
+                        <span class="tutorial-header-icon">&#x1F4CA;</span>
+                        Расчеты и аналитика
+                    </h2>
+                    <p>Как получить метрики, отчеты и аналитические данные по процессу</p>
+                </div>
+
+                <div class="expand-all-container">
+                    <button class="btn btn-expand-all" onclick="toggleAllAccordions('calculations')">Развернуть все</button>
+                </div>
+
+                <div class="accordion-container">
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">1</span>
+                                <span class="accordion-question-text">Запуск расчета процесса</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Как рассчитать метрики процесса:</strong></p>
+
+                                    <ol>
+                                        <li>Убедитесь, что процесс не содержит ошибок (красных элементов)</li>
+                                        <li>Нажмите кнопку <code>Рассчитать</code> в правом верхнем углу</li>
+                                        <li>Укажите параметры расчета:
+                                            <ul>
+                                                <li><strong>Объем:</strong> Сколько раз процесс запускается (в месяц/год)</li>
+                                                <li><strong>Сценарий:</strong> Минимум / Прогноз / Максимум / Все три</li>
+                                            </ul>
+                                        </li>
+                                        <li>Нажмите <code>Запустить расчет</code></li>
+                                        <li>Система обработает данные (1-3 секунды)</li>
+                                        <li>Готово! Результаты появятся на экране</li>
+                                    </ol>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Что рассчитывается?</div>
+                                        <strong>Базовые метрики (BASE тариф):</strong>
+                                        <ul>
+                                            <li>Общее время процесса (по всем сценариям)</li>
+                                            <li>Общая стоимость процесса</li>
+                                            <li>Стоимость одного запуска</li>
+                                            <li>FTE для каждого участника</li>
+                                            <li>Загрузка участников (%)</li>
+                                            <li>Перегруженные участники (если FTE > 1)</li>
+                                        </ul>
+                                        <strong>Расширенные метрики (PRO тариф):</strong>
+                                        <ul>
+                                            <li>Стоимость каждого этапа процесса</li>
+                                            <li>Узкие места (bottlenecks)</li>
+                                            <li>Распределение стоимости по отделам</li>
+                                            <li>Анализ входящих ресурсов и результатов</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">2</span>
+                                <span class="accordion-question-text">Интерпретация результатов</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Как читать результаты расчетов:</strong></p>
+
+                                    <div class="success-box">
+                                        <div class="success-box-title">&#x1F4C8; Dashboard с метриками</div>
+                                        <p><strong>Верхняя панель:</strong></p>
+                                        <ul>
+                                            <li><strong>Общее время:</strong> От старта до финиша процесса</li>
+                                            <li><strong>Общая стоимость:</strong> Сумма всех затрат за период</li>
+                                            <li><strong>Стоимость запуска:</strong> Сколько стоит один процесс</li>
+                                            <li><strong>Количество участников:</strong> Сколько человек задействовано</li>
+                                        </ul>
+                                    </div>
+
+                                    <p><strong>Раздел "Участники":</strong></p>
+                                    <ul>
+                                        <li><strong>Зеленый индикатор:</strong> Участник не перегружен (FTE < 0.8)</li>
+                                        <li><strong>Желтый индикатор:</strong> Оптимальная загрузка (FTE 0.8-1.0)</li>
+                                        <li><strong>Красный индикатор:</strong> Перегрузка! (FTE > 1.0)</li>
+                                    </ul>
+
+                                    <div class="warning-box">
+                                        <div class="warning-box-title">&#x26A0; Красные индикаторы</div>
+                                        Если у участника FTE > 1.0, это означает, что он физически не успеет выполнить все задачи. Необходимо:
+                                        <ul>
+                                            <li>Нанять еще одного сотрудника на эту роль</li>
+                                            <li>Перераспределить задачи на других участников</li>
+                                            <li>Увеличить доступный ресурс (переработки)</li>
+                                            <li>Автоматизировать часть задач</li>
+                                        </ul>
+                                    </div>
+
+                                    <p><strong>Раздел "Сценарии":</strong></p>
+                                    <ul>
+                                        <li><strong>Минимум:</strong> Оптимистичный прогноз</li>
+                                        <li><strong>Прогноз:</strong> Наиболее вероятный вариант (используйте для планирования)</li>
+                                        <li><strong>Максимум:</strong> Пессимистичный прогноз (для оценки рисков)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">3</span>
+                                <span class="accordion-question-text">Графики и визуализация данных</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Доступные графики и диаграммы:</strong></p>
+
+                                    <ul>
+                                        <li><strong>Диаграмма распределения стоимости:</strong>
+                                            <ul>
+                                                <li>Pie Chart с разбивкой по участникам</li>
+                                                <li>Показывает, кто "съедает" больше бюджета</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>График загрузки участников:</strong>
+                                            <ul>
+                                                <li>Bar Chart с FTE каждого участника</li>
+                                                <li>Красные столбцы = перегрузка</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Временная шкала (Gantt):</strong>
+                                            <ul>
+                                                <li>Визуализация последовательности задач</li>
+                                                <li>Показывает параллельные и последовательные этапы</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Сравнение сценариев:</strong>
+                                            <ul>
+                                                <li>Линейный график Min/Прогноз/Max</li>
+                                                <li>Удобно для оценки разброса</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                                    <div class="success-box">
+                                        <div class="success-box-title">&#x1F4BE; Экспорт графиков</div>
+                                        Любой график можно:
+                                        <ul>
+                                            <li>Сохранить как изображение (PNG, SVG)</li>
+                                            <li>Скопировать в буфер обмена</li>
+                                            <li>Вставить в презентацию или отчет</li>
+                                        </ul>
+                                        <p>Нажмите на иконку <code>&#x1F4F7;</code> в углу графика.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 7: Export -->
+            <div class="tutorial-section" id="export">
+                <div class="tutorial-header">
+                    <h2>
+                        <span class="tutorial-header-icon">&#x1F4BE;</span>
+                        Сохранение и экспорт данных
+                    </h2>
+                    <p>Как сохранять проекты, экспортировать отчеты и делиться результатами</p>
+                </div>
+
+                <div class="expand-all-container">
+                    <button class="btn btn-expand-all" onclick="toggleAllAccordions('export')">Развернуть все</button>
+                </div>
+
+                <div class="accordion-container">
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">1</span>
+                                <span class="accordion-question-text">Сохранение проекта локально</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Как сохранить проект на компьютер:</strong></p>
+
+                                    <ol>
+                                        <li>Откройте нужный процесс</li>
+                                        <li>Нажмите <code>Файл → Сохранить проект</code></li>
+                                        <li>Выберите формат:
+                                            <ul>
+                                                <li><strong>JSON:</strong> Полная копия проекта (можно загрузить обратно)</li>
+                                                <li><strong>CSV:</strong> Таблица с задачами и метриками</li>
+                                                <li><strong>PDF:</strong> Визуальная схема + отчет (скоро)</li>
+                                            </ul>
+                                        </li>
+                                        <li>Укажите место сохранения</li>
+                                        <li>Готово! Файл сохранен на вашем устройстве</li>
+                                    </ol>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Формат JSON</div>
+                                        <p><strong>Рекомендуется использовать JSON для:</strong></p>
+                                        <ul>
+                                            <li>Резервного копирования проектов</li>
+                                            <li>Переноса между устройствами</li>
+                                            <li>Отправки коллегам (они могут загрузить и продолжить работу)</li>
+                                            <li>Версионирования (сохраняйте разные версии процесса)</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="warning-box">
+                                        <div class="warning-box-title">&#x26A0; Важно</div>
+                                        Файл JSON содержит ВСЕ данные проекта, включая:
+                                        <ul>
+                                            <li>Структуру процесса</li>
+                                            <li>Участников и их ставки</li>
+                                            <li>Все расчеты и метрики</li>
+                                        </ul>
+                                        <strong>Храните файлы в безопасном месте!</strong> Не делитесь ими публично, если содержат конфиденциальную информацию.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">2</span>
+                                <span class="accordion-question-text">Загрузка сохраненного проекта</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Как загрузить ранее сохраненный проект:</strong></p>
+
+                                    <ol>
+                                        <li>Нажмите <code>Файл → Загрузить проект</code></li>
+                                        <li>Выберите JSON файл на вашем компьютере</li>
+                                        <li>Система автоматически проверит файл на корректность</li>
+                                        <li>Проект загрузится в редактор</li>
+                                        <li>Продолжайте работу с того места, где остановились!</li>
+                                    </ol>
+
+                                    <div class="success-box">
+                                        <div class="success-box-title">&#x2728; Автоматическая миграция</div>
+                                        Если вы загружаете проект, созданный в старой версии системы, мы автоматически обновим его до текущего формата. Все данные сохранятся!
+                                    </div>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Совместная работа</div>
+                                        Вы можете:
+                                        <ul>
+                                            <li>Отправить JSON файл коллеге</li>
+                                            <li>Он загрузит его в свой аккаунт</li>
+                                            <li>Внесет изменения</li>
+                                            <li>Отправит обновленный файл обратно</li>
+                                        </ul>
+                                        <p><strong>Для PRO:</strong> Доступна функция "Поделиться ссылкой" для онлайн-совместной работы.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">3</span>
+                                <span class="accordion-question-text">Экспорт отчетов и метрик</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Доступные форматы экспорта отчетов:</strong></p>
+
+                                    <ul>
+                                        <li><strong>CSV (таблица):</strong>
+                                            <ul>
+                                                <li>Список всех задач с метриками</li>
+                                                <li>Можно открыть в Excel/Google Sheets</li>
+                                                <li>Удобно для дальнейшего анализа</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>PDF отчет (скоро):</strong>
+                                            <ul>
+                                                <li>Визуальная схема процесса</li>
+                                                <li>Сводка по метрикам</li>
+                                                <li>Графики и диаграммы</li>
+                                                <li>Готов для презентации руководству</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Изображение схемы:</strong>
+                                            <ul>
+                                                <li>PNG или SVG</li>
+                                                <li>Высокое разрешение для печати</li>
+                                                <li>Можно вставить в документы</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Как экспортировать?</div>
+                                        <ol>
+                                            <li>Откройте раздел "Аналитика"</li>
+                                            <li>Нажмите <code>Экспорт → Выбрать формат</code></li>
+                                            <li>Настройте параметры экспорта (что включить)</li>
+                                            <li>Нажмите <code>Скачать</code></li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 8: PRO Features -->
+            <div class="tutorial-section" id="pro-features">
+                <div class="tutorial-header">
+                    <h2>
+                        <span class="tutorial-header-icon">&#x2B50;</span>
+                        Продвинутые функции PRO <span class="pro-badge">PRO</span>
+                    </h2>
+                    <p>Расширенные возможности для профессионального анализа процессов</p>
+                </div>
+
+                <div class="expand-all-container">
+                    <button class="btn btn-expand-all" onclick="toggleAllAccordions('pro-features')">Развернуть все</button>
+                </div>
+
+                <div class="accordion-container">
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">1</span>
+                                <span class="accordion-question-text">Цепочки создания ценности (Value Stream)</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Что это такое?</strong></p>
+                                    <p>Value Stream - это сквозной учет того, как входящие ресурсы превращаются в конечные результаты процесса.</p>
+
+                                    <div class="success-box">
+                                        <div class="success-box-title">&#x1F3AF; Зачем это нужно?</div>
+                                        <ul>
+                                            <li>Понять <strong>полную себестоимость</strong> продукта/услуги</li>
+                                            <li>Увидеть, где <strong>теряется ценность</strong></li>
+                                            <li>Оценить <strong>ROI</strong> каждого этапа</li>
+                                            <li>Найти <strong>узкие места</strong> в создании ценности</li>
+                                        </ul>
+                                    </div>
+
+                                    <p><strong>Как настроить Value Stream:</strong></p>
+                                    <ol>
+                                        <li>Откройте процесс в редакторе</li>
+                                        <li>Нажмите <code>PRO → Value Stream Mapping</code></li>
+                                        <li>Укажите <strong>входящие ресурсы</strong>:
+                                            <ul>
+                                                <li>Сырье и материалы</li>
+                                                <li>Время персонала</li>
+                                                <li>Оборудование</li>
+                                                <li>Лицензии и подписки</li>
+                                            </ul>
+                                        </li>
+                                        <li>Укажите <strong>конечные результаты</strong>:
+                                            <ul>
+                                                <li>Готовый продукт</li>
+                                                <li>Оказанная услуга</li>
+                                                <li>Договор/контракт</li>
+                                            </ul>
+                                        </li>
+                                        <li>Система автоматически рассчитает <strong>добавленную ценность</strong> на каждом этапе</li>
+                                    </ol>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4CA; Метрики Value Stream</div>
+                                        <ul>
+                                            <li><strong>Value Add Ratio:</strong> % времени, добавляющего ценность</li>
+                                            <li><strong>Process Cycle Efficiency:</strong> Эффективность процесса</li>
+                                            <li><strong>Lead Time vs Processing Time:</strong> Общее время vs время работы</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">2</span>
+                                <span class="accordion-question-text">Поиск узких мест (Bottleneck Analysis)</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>Что такое узкое место?</strong></p>
+                                    <p>Это этап процесса, который ограничивает пропускную способность всей системы. Именно здесь образуются очереди, задержки и перерасход бюджета.</p>
+
+                                    <div class="warning-box">
+                                        <div class="warning-box-title">&#x26A0; Признаки узкого места</div>
+                                        <ul>
+                                            <li>Участник с FTE > 1.0 (перегружен)</li>
+                                            <li>Задача с максимальной стоимостью</li>
+                                            <li>Этап с самым долгим временем выполнения</li>
+                                            <li>Задача, на которой "застревают" процессы</li>
+                                        </ul>
+                                    </div>
+
+                                    <p><strong>Как система находит узкие места:</strong></p>
+                                    <ol>
+                                        <li>После расчета перейдите в <code>PRO → Bottleneck Analysis</code></li>
+                                        <li>Система автоматически выделит проблемные зоны <strong>красным цветом</strong></li>
+                                        <li>Вы увидите:
+                                            <ul>
+                                                <li>Топ-3 самых дорогих задач</li>
+                                                <li>Топ-3 самых долгих задач</li>
+                                                <li>Перегруженные участники</li>
+                                                <li>Задачи с максимальным разбросом (Max-Min)</li>
+                                            </ul>
+                                        </li>
+                                        <li>Для каждого узкого места предложены <strong>рекомендации</strong></li>
+                                    </ol>
+
+                                    <div class="success-box">
+                                        <div class="success-box-title">&#x2728; Умные рекомендации</div>
+                                        Система анализирует узкие места и предлагает решения:
+                                        <ul>
+                                            <li><strong>Если перегружен участник:</strong> Нанять еще одного, делегировать, автоматизировать</li>
+                                            <li><strong>Если задача слишком дорогая:</strong> Оптимизировать, отдать на аутсорс, автоматизировать</li>
+                                            <li><strong>Если задача слишком долгая:</strong> Разбить на подзадачи, параллелить, упростить</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">3</span>
+                                <span class="accordion-question-text">Детальная аналитика по этапам</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>PRO тариф дает доступ к детальным отчетам по каждому этапу процесса:</strong></p>
+
+                                    <ul>
+                                        <li><strong>Финансовый анализ этапа:</strong>
+                                            <ul>
+                                                <li>Стоимость этапа (руб.)</li>
+                                                <li>Доля в общей стоимости процесса (%)</li>
+                                                <li>Разброс стоимости (Min-Max)</li>
+                                                <li>Стоимость на единицу времени (руб./час)</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Временной анализ:</strong>
+                                            <ul>
+                                                <li>Среднее время выполнения</li>
+                                                <li>Минимальное и максимальное время</li>
+                                                <li>Вероятность задержек</li>
+                                                <li>Влияние на общий Lead Time</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Анализ участников:</strong>
+                                            <ul>
+                                                <li>Кто задействован на этапе</li>
+                                                <li>Какую часть их ресурса занимает</li>
+                                                <li>Стоимость каждого участника на этапе</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Сравнение этапов:</strong>
+                                            <ul>
+                                                <li>Визуальное сравнение всех этапов по стоимости</li>
+                                                <li>Выявление самых дорогих/дешевых</li>
+                                                <li>Heat map загрузки участников по этапам</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                                    <div class="info-box">
+                                        <div class="info-box-title">&#x1F4A1; Как открыть детальную аналитику?</div>
+                                        <ol>
+                                            <li>Кликните правой кнопкой на любой задаче в процессе</li>
+                                            <li>Выберите <code>Детальная аналитика</code></li>
+                                            <li>Откроется боковая панель с полной информацией</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-question" onclick="toggleAccordion(this)">
+                            <div class="accordion-question-content">
+                                <span class="accordion-number">4</span>
+                                <span class="accordion-question-text">Сравнение нескольких процессов</span>
+                            </div>
+                            <div class="accordion-toggle">▼</div>
+                        </div>
+                        <div class="accordion-answer">
+                            <div class="accordion-answer-inner">
+                                <div class="accordion-answer-text">
+                                    <p><strong>PRO позволяет сравнивать до 5 процессов одновременно:</strong></p>
+
+                                    <p><strong>Зачем это нужно?</strong></p>
+                                    <ul>
+                                        <li>Сравнить <strong>до</strong> и <strong>после</strong> оптимизации</li>
+                                        <li>Выбрать лучший из нескольких вариантов процесса</li>
+                                        <li>Сравнить процессы разных отделов</li>
+                                        <li>Benchmark с индустриальными стандартами</li>
+                                    </ul>
+
+                                    <p><strong>Как сравнить процессы:</strong></p>
+                                    <ol>
+                                        <li>Перейдите в <code>PRO → Сравнение процессов</code></li>
+                                        <li>Выберите 2-5 процессов для сравнения</li>
+                                        <li>Выберите метрики для сравнения:
+                                            <ul>
+                                                <li>Общая стоимость</li>
+                                                <li>Время выполнения</li>
+                                                <li>Количество участников</li>
+                                                <li>FTE по ролям</li>
+                                                <li>Стоимость по отделам</li>
+                                            </ul>
+                                        </li>
+                                        <li>Нажмите <code>Построить сравнение</code></li>
+                                    </ol>
+
+                                    <div class="success-box">
+                                        <div class="success-box-title">&#x1F4CA; Визуализация сравнения</div>
+                                        <p>Результаты отображаются в виде:</p>
+                                        <ul>
+                                            <li><strong>Side-by-side графики:</strong> Столбцы рядом для каждого процесса</li>
+                                            <li><strong>Radar Chart:</strong> Многомерное сравнение по всем метрикам</li>
+                                            <li><strong>Таблица с разницей:</strong> Точные значения и % изменения</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Actions CTA -->
+    <section class="quick-actions">
+        <div class="container">
+            <div class="quick-actions-content">
+                <h2>Готовы начать работу?</h2>
+                <p>Примените полученные знания на практике и создайте свой первый процесс</p>
+                <div class="action-buttons">
+                    <a href="https://projectmentor.ru/pm_pro" class="btn btn-white" target="_blank">Войти в PM</a>
+                    <a href="https://t.me/inozemtsev_ba" class="btn btn-white" target="_blank">Написать в поддержку</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Владислав Иноземцев</h4>
+                    <p>Превращаю хаос в систему. Нахожу деньги в процессах.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <a href="mailto:inozemtsev.vladislav.2020@gmail.com">inozemtsev.vladislav.2020@gmail.com</a>
+                    <a href="tel:+79147314417">+7 (914) 731-44-17</a>
+                    <a href="https://t.me/inozemtsev_ba" target="_blank">Telegram</a>
+                </div>
+
+            </div>
+            <div class="footer-bottom">
+                2025 Process Mentor. Все права защищены.
+            </div>
+        </div>
+    </footer>
+    
+
+    <script>
+        // ========== ФУНКЦИОНАЛ МОДАЛЬНОГО ОКНА ДЛЯ ИЗОБРАЖЕНИЙ ==========
+
+        // Переменные для управления модальным окном
+        let currentImageIndex = 0;
+        let images = [];
+        let isModalOpen = false;
+
+        // Инициализация модального окна при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Находим все изображения для увеличения
+            const zoomableImages = document.querySelectorAll('.settings-screenshot');
+            
+            // Добавляем класс zoomable ко всем изображениям для увеличения
+            zoomableImages.forEach(img => {
+                img.classList.add('zoomable');
+                // Добавляем подсказку под изображением
+                const hint = document.createElement('div');
+                hint.className = 'zoom-hint';
+                hint.textContent = 'Кликните для увеличения';
+                img.parentNode.insertBefore(hint, img.nextSibling);
+                
+                // Добавляем обработчик клика
+                img.addEventListener('click', function() {
+                    openModal(this.src, this.alt, zoomableImages);
+                });
+            });
+
+            // Инициализация модального окна
+            initModal();
+        });
+
+        // Инициализация модального окна
+        function initModal() {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            
+            // Закрытие по клику на фон
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Закрытие по Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isModalOpen) {
+                    closeModal();
+                }
+                // Навигация стрелками
+                if (isModalOpen) {
+                    if (e.key === 'ArrowLeft') prevImage();
+                    if (e.key === 'ArrowRight') nextImage();
+                }
+            });
+
+            // Отключение скролла при открытом модальном окне
+            document.addEventListener('wheel', function(e) {
+                if (isModalOpen && !modalImg.classList.contains('zoomed')) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        }
+
+        // Открытие модального окна
+        function openModal(imgSrc, imgAlt, imgCollection) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            // Собираем все изображения для навигации
+            images = Array.from(imgCollection || document.querySelectorAll('.zoomable'));
+            
+            // Находим индекс текущего изображения
+            currentImageIndex = images.findIndex(img => img.src === imgSrc);
+            
+            // Устанавливаем изображение и подпись
+            modalImg.src = imgSrc;
+            modalImg.alt = imgAlt;
+            modalCaption.textContent = imgAlt;
+            
+            // Сбрасываем увеличение
+            modalImg.classList.remove('zoomed');
+            
+            // Показываем модальное окно
+            modal.style.display = 'block';
+            isModalOpen = true;
+            
+            // Блокируем скролл страницы
+            document.body.style.overflow = 'hidden';
+            
+            // Обновляем состояние кнопок навигации
+            updateNavButtons();
+            
+            // Фокус на модальном окне для работы клавиатуры
+            modal.focus();
+        }
+
+        // Закрытие модального окна
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            
+            // Сбрасываем увеличение
+            modalImg.classList.remove('zoomed');
+            
+            // Скрываем модальное окно
+            modal.style.display = 'none';
+            isModalOpen = false;
+            
+            // Восстанавливаем скролл страницы
+            document.body.style.overflow = 'auto';
+        }
+
+        // Переключение увеличения изображения
+        function toggleZoom() {
+            const modalImg = document.getElementById('modalImage');
+            modalImg.classList.toggle('zoomed');
+        }
+
+        // Следующее изображение
+        function nextImage() {
+            if (currentImageIndex < images.length - 1) {
+                currentImageIndex++;
+                updateModalImage();
+            }
+        }
+
+        // Предыдущее изображение
+        function prevImage() {
+            if (currentImageIndex > 0) {
+                currentImageIndex--;
+                updateModalImage();
+            }
+        }
+
+        // Обновление изображения в модальном окне
+        function updateModalImage() {
+            const modalImg = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            // Сбрасываем увеличение
+            modalImg.classList.remove('zoomed');
+            
+            // Устанавливаем новое изображение
+            const img = images[currentImageIndex];
+            modalImg.src = img.src;
+            modalImg.alt = img.alt;
+            modalCaption.textContent = img.alt;
+            
+            // Обновляем состояние кнопок навигации
+            updateNavButtons();
+        }
+
+        // Обновление состояния кнопок навигации
+        function updateNavButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentImageIndex === 0;
+            nextBtn.disabled = currentImageIndex === images.length - 1;
+            
+            // Скрываем кнопки навигации, если только одно изображение
+            if (images.length <= 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'flex';
+            }
+        }
+        
+        
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Accordion Toggle
+        function toggleAccordion(element) {
+            const accordionItem = element.closest('.accordion-item');
+            const isActive = accordionItem.classList.contains('active');
+            
+            if (!isActive) {
+                accordionItem.classList.add('active');
+            } else {
+                accordionItem.classList.remove('active');
+            }
+        }
+
+        // Toggle All Accordions
+        function toggleAllAccordions(sectionId) {
+            const section = document.getElementById(sectionId);
+            const items = section.querySelectorAll('.accordion-item');
+            const button = section.querySelector('.btn-expand-all');
+            
+            const allExpanded = Array.from(items).every(item => item.classList.contains('active'));
+            
+            if (allExpanded) {
+                items.forEach(item => item.classList.remove('active'));
+                button.textContent = 'Развернуть все';
+            } else {
+                items.forEach(item => item.classList.add('active'));
+                button.textContent = 'Свернуть все';
+            }
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Search Functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchClear = document.getElementById('searchClear');
+        const searchResults = document.getElementById('searchResults');
+        let searchTimeout;
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            
+            // Show/hide clear button
+            if (query.length > 0) {
+                searchClear.classList.add('active');
+            } else {
+                searchClear.classList.remove('active');
+            }
+
+            // Debounce search
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                performSearch(query);
+            }, 300);
+        });
+
+        function clearSearch() {
+            searchInput.value = '';
+            searchClear.classList.remove('active');
+            performSearch('');
+            searchInput.focus();
+        }
+
+        function performSearch(query) {
+            const sections = document.querySelectorAll('.tutorial-section');
+            let totalMatches = 0;
+
+            if (!query) {
+                // Reset - show everything
+                sections.forEach(section => {
+                    section.classList.remove('hidden');
+                    const items = section.querySelectorAll('.accordion-item');
+                    items.forEach(item => {
+                        item.classList.remove('hidden', 'active');
+                        removeHighlights(item);
+                    });
+                });
+                searchResults.textContent = '';
+                return;
+            }
+
+            const queryLower = query.toLowerCase();
+
+            sections.forEach(section => {
+                const items = section.querySelectorAll('.accordion-item');
+                let sectionHasMatches = false;
+
+                items.forEach(item => {
+                    const questionText = item.querySelector('.accordion-question-text');
+                    const answerText = item.querySelector('.accordion-answer-text');
+                    
+                    const questionContent = questionText.textContent.toLowerCase();
+                    const answerContent = answerText.textContent.toLowerCase();
+
+                    const matchInQuestion = questionContent.includes(queryLower);
+                    const matchInAnswer = answerContent.includes(queryLower);
+
+                    if (matchInQuestion || matchInAnswer) {
+                        item.classList.remove('hidden');
+                        item.classList.add('active'); // Auto-expand matching items
+                        sectionHasMatches = true;
+                        totalMatches++;
+
+                        // Highlight matches
+                        removeHighlights(item);
+                        if (matchInQuestion) {
+                            highlightText(questionText, query);
+                        }
+                        if (matchInAnswer) {
+                            highlightText(answerText, query);
+                        }
+                    } else {
+                        item.classList.add('hidden');
+                        removeHighlights(item);
+                    }
+                });
+
+                // Hide/show entire section
+                if (sectionHasMatches) {
+                    section.classList.remove('hidden');
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+
+            // Update results info
+            if (totalMatches === 0) {
+                searchResults.textContent = 'Ничего не найдено. Попробуйте другой запрос.';
+                searchResults.style.color = '#EF4444';
+            } else {
+                searchResults.textContent = `Найдено: ${totalMatches} ${getResultWord(totalMatches)}`;
+                searchResults.style.color = '#059669';
+            }
+        }
+
+        function highlightText(element, query) {
+            const text = element.textContent;
+            const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
+            const highlightedHTML = text.replace(regex, '<span class="search-highlight">$1</span>');
+            
+            // Only update if there are actual matches
+            if (highlightedHTML !== text) {
+                element.innerHTML = highlightedHTML;
+            }
+        }
+
+        function removeHighlights(item) {
+            const highlighted = item.querySelectorAll('.search-highlight');
+            highlighted.forEach(span => {
+                const text = span.textContent;
+                span.replaceWith(text);
+            });
+        }
+
+        function escapeRegex(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function getResultWord(count) {
+            if (count % 10 === 1 && count % 100 !== 11) {
+                return 'результат';
+            } else if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) {
+                return 'результата';
+            } else {
+                return 'результатов';
+            }
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Apply fade-in animation to elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.accordion-item, .nav-card, .tutorial-header');
+            elements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
