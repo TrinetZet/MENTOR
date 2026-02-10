@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Что будет если ты закроешь PROCESS MENTOR</title>
+    <meta name="description" content="Игра: лови сломанные процессы пока не поздно. Узнай, что будет без MENTOR.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0094d3;
+            --primary-dark: #007aad;
+            --accent: #00C7BE;
+            --success: #10B981;
+            --error: #EF4444;
+            --warning: #F59E0B;
+            --gradient-primary: linear-gradient(135deg, #0094d3 0%, #00C7BE 100%);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.12);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.16);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            color: #111827;
+            background: #FFFFFF;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(0, 148, 211, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 148, 211, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #FFFFFF;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 60px 0 40px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 50%, #FFFFFF 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 148, 211, 0.08) 0%, transparent 70%);
+            top: -300px;
+            right: -100px;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .game-title {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+            color: #111827;
+        }
+
+        .game-title .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .game-subtitle {
+            font-size: 20px;
+            color: #6B7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Game Container */
+        .game-section {
+            padding: 40px 0 80px;
+            background: #FFFFFF;
+        }
+
+        .game-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .game-stats {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .stat-card {
+            background: #FFFFFF;
+            border: 2px solid rgba(229, 231, 235, 0.8);
+            border-radius: 20px;
+            padding: 24px 40px;
+            text-align: center;
+            min-width: 140px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 148, 211, 0.3);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #9CA3AF;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: #111827;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-value.timer {
+            color: var(--error);
+        }
+
+        .stat-value.score {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-value.caught {
+            color: var(--success);
+        }
+
+        /* Game Canvas */
+        .game-container {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            border: 2px solid rgba(229, 231, 235, 0.5);
+            max-width: 100%;
+        }
+
+        #gameCanvas {
+            display: block;
+            background: linear-gradient(180deg, #F9FAFB 0%, #F0F9FF 100%);
+            cursor: none;
+        }
+
+        .game-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s ease;
+        }
+
+        .game-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .overlay-title {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            text-align: center;
+            color: #111827;
+        }
+
+        .overlay-title.game-over {
+            color: var(--error);
+        }
+
+        .overlay-title.victory {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .overlay-score {
+            font-size: 20px;
+            color: #6B7280;
+            margin-bottom: 32px;
+        }
+
+        /* Instructions */
+        .instructions {
+            text-align: center;
+            color: #6B7280;
+            font-size: 15px;
+            padding: 24px 32px;
+            background: #F9FAFB;
+            border-radius: 16px;
+            border: 1px solid rgba(229, 231, 235, 0.5);
+            max-width: 600px;
+        }
+
+        .key {
+            display: inline-block;
+            padding: 6px 14px;
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 148, 211, 0.2);
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 0 4px;
+            font-size: 13px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Leaderboard Section */
+        .leaderboard-section {
+            padding: 80px 0;
+            background: linear-gradient(180deg, #F9FAFB 0%, #FFFFFF 100%);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+            color: #111827;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: #6B7280;
+            margin-bottom: 48px;
+            margin-top: 24px;
+        }
+
+        .leaderboard-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #FFFFFF;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            border: 1px solid rgba(229, 231, 235, 0.5);
+        }
+
+        .leaderboard-header {
+            display: grid;
+            grid-template-columns: 80px 1fr 120px;
+            padding: 20px 32px;
+            background: linear-gradient(135deg, #F9FAFB 0%, #F0F9FF 100%);
+            border-bottom: 2px solid rgba(229, 231, 235, 0.5);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #6B7280;
+        }
+
+        .leaderboard-row {
+            display: grid;
+            grid-template-columns: 80px 1fr 120px;
+            padding: 20px 32px;
+            border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+            transition: all 0.3s ease;
+            align-items: center;
+        }
+
+        .leaderboard-row:hover {
+            background: #F9FAFB;
+        }
+
+        .leaderboard-row:last-child {
+            border-bottom: none;
+        }
+
+        .leaderboard-row.first-place {
+            background: linear-gradient(90deg, rgba(0, 148, 211, 0.05) 0%, rgba(0, 199, 190, 0.05) 100%);
+            border-left: 4px solid var(--primary);
+        }
+
+        .rank {
+            font-weight: 800;
+            font-size: 20px;
+            color: #9CA3AF;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .leaderboard-row.first-place .rank {
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .player-name {
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+        }
+
+        .player-score {
+            font-weight: 700;
+            color: #111827;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            font-size: 18px;
+        }
+
+        .leaderboard-row.first-place .player-score {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .crown {
+            font-size: 24px;
+        }
+
+        .process-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(0, 148, 211, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .leaderboard-row.first-place .process-icon {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
+            color: #9CA3AF;
+            padding: 60px 0 40px;
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-content p {
+            margin-bottom: 8px;
+        }
+
+        .footer-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 32px;
+            }
+
+            .game-stats {
+                gap: 12px;
+            }
+
+            .stat-card {
+                padding: 16px 24px;
+                min-width: 100px;
+            }
+
+            .stat-value {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .leaderboard-header,
+            .leaderboard-row {
+                grid-template-columns: 60px 1fr 100px;
+                padding: 16px 20px;
+            }
+
+            .instructions {
+                padding: 16px 20px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .leaderboard-header,
+            .leaderboard-row {
+                grid-template-columns: 50px 1fr 80px;
+                padding: 14px 16px;
+                font-size: 14px;
+            }
+
+            .player-name {
+                font-size: 14px;
+            }
+
+            .player-score {
+                font-size: 16px;
+            }
+        }
+        
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+            justify-content: flex-end;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            max-height: 80px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+        
+        .tlk-userbar {
+    display: none !important;
+}
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="https://projectmentor.ru/" class="logo">
+                    <img src="https://optim.tildacdn.com/tild3965-3039-4565-b766-623739653734/-/resize/317x/-/format/webp/IMG_20250529_205437-.png.webp"
+                         alt="Project mentor logo">
+                </a>
+                <div class="header-nav">
+                    <a href="https://projectmentor.ru/" class="btn btn-primary">Назад на главную</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="game-header">
+                <h1 class="game-title">Что будет если ты закроешь <p><span class="highlight">PROCESS MENTOR</span></h1></p>
+                <p class="game-subtitle">Лови сломанные процессы, пока они не разрушили компанию. Успей починить до дедлайна!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Section -->
+    <section class="game-section">
+        <div class="container">
+            <div class="game-wrapper">
+                <div class="game-stats">
+                    <div class="stat-card">
+                        <div class="stat-label">Время</div>
+                        <div class="stat-value timer" id="timer">60</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Поймано</div>
+                        <div class="stat-value caught" id="caught">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Счет</div>
+                        <div class="stat-value score" id="score">0</div>
+                    </div>
+                </div>
+
+                <div class="game-container">
+                    <canvas id="gameCanvas" width="800" height="500"></canvas>
+                    <div class="game-overlay" id="gameOverlay">
+                        <div class="overlay-title" id="overlayTitle">Игра окончена</div>
+                        <div class="overlay-score" id="overlayScore">Счет: 0</div>
+                        <button class="btn btn-primary" onclick="startGame()">Играть снова</button>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    Управляйте платформой стрелками <span class="key">←</span> <span class="key">→</span> или <span class="key">A</span> <span class="key">D</span>. 
+                    Ловите сломанные процессы ⚙️ и критические ошибки в процессах 🔥!
+                </div> 
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboard -->
+    <section class="leaderboard-section">
+        <div class="container">
+            <h2 class="section-title">🏆 Таблица лидеров</h2>
+            <p class="section-subtitle">Топ-10 спасителей процессов</p>
+            
+            <div class="leaderboard-wrapper">
+                <div class="leaderboard-header">
+                    <div>Место</div>
+                    <div>Игрок</div>
+                    <div>Счет</div>
+                </div>
+                <div id="leaderboardBody">
+                    <!-- Generated by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const timerEl = document.getElementById('timer');
+        const caughtEl = document.getElementById('caught');
+        const scoreEl = document.getElementById('score');
+        const overlay = document.getElementById('gameOverlay');
+        const overlayTitle = document.getElementById('overlayTitle');
+        const overlayScore = document.getElementById('overlayScore');
+
+        // Game state
+        let gameRunning = false;
+        let timeLeft = 60;
+        let caught = 0;
+        let score = 0;
+        let animationId;
+        let timerInterval;
+        let lastTime = 0;
+        let spawnTimer = 0;
+        let spawnInterval = 1200;
+
+        // Platform (player)
+        const platform = {
+            x: canvas.width / 2 - 60,
+            y: canvas.height - 90,
+            width: 120,
+            height: 20,
+            speed: 10,
+            vx: 0
+        };
+
+        // Falling processes
+        let processes = [];
+        let particles = [];
+
+        // Controls
+        const keys = {};
+        
+        document.addEventListener('keydown', (e) => {
+            keys[e.key] = true;
+        });
+        
+        document.addEventListener('keyup', (e) => {
+            keys[e.key] = false;
+        });
+
+        // Touch controls
+        let touchStartX = 0;
+        canvas.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+        
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touchX = e.touches[0].clientX;
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            platform.x = (touchX - rect.left) * scaleX - platform.width / 2;
+        });
+
+        class Process {
+            constructor() {
+                this.radius = 28;
+                this.x = Math.random() * (canvas.width - this.radius * 2) + this.radius;
+                this.y = -this.radius;
+                this.speed = Math.random() * 2.5 + 2 + (60 - timeLeft) * 0.06;
+                this.rotation = 0;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.08;
+                this.type = Math.random() > 0.85 ? 'critical' : 'broken';
+                this.caught = false;
+            }
+
+            update() {
+                this.y += this.speed;
+                this.rotation += this.rotationSpeed;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                
+                // Draw process icon
+                ctx.font = '36px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                if (this.type === 'critical') {
+                    ctx.fillText('🔥', 0, 0);
+                } else {
+                    ctx.fillText('⚙️', 0, 0);
+                }
+                
+                // Broken effect - crack lines
+                ctx.strokeStyle = this.type === 'critical' ? 'rgba(239, 68, 68, 0.6)' : 'rgba(245, 158, 11, 0.6)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(-15, -10);
+                ctx.lineTo(-5, 0);
+                ctx.lineTo(-10, 10);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(10, -15);
+                ctx.lineTo(15, -5);
+                ctx.stroke();
+                
+                ctx.restore();
+            }
+        }
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 10;
+                this.vy = (Math.random() - 0.5) * 10 - 3;
+                this.life = 1;
+                this.color = color;
+                this.size = Math.random() * 5 + 2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += 0.3;
+                this.life -= 0.025;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.life;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function createExplosion(x, y, isCritical) {
+            const colors = isCritical ? ['#EF4444', '#F87171', '#FECACA'] : ['#F59E0B', '#FBBF24', '#FDE68A'];
+            for (let i = 0; i < 12; i++) {
+                particles.push(new Particle(x, y, colors[Math.floor(Math.random() * colors.length)]));
+            }
+        }
+
+        function drawPlatform() {
+            ctx.save();
+            
+            // Platform body
+            const gradient = ctx.createLinearGradient(platform.x, platform.y, platform.x, platform.y + platform.height);
+            gradient.addColorStop(0, '#0094d3');
+            gradient.addColorStop(1, '#00C7BE');
+            
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.roundRect(platform.x, platform.y, platform.width, platform.height, 10);
+            ctx.fill();
+            
+            // Platform shine
+            ctx.fillStyle = 'rgba(255,255,255,0.3)';
+            ctx.beginPath();
+            ctx.roundRect(platform.x, platform.y, platform.width, 6, 10);
+            ctx.fill();
+            
+            // MENTOR logo on platform
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = 'bold 11px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('', platform.x + platform.width / 2, platform.y + platform.height / 2 + 1);
+            
+            ctx.restore();
+        }
+
+        function update() {
+            if (!gameRunning) return;
+
+            // Update platform position
+            platform.vx = 0;
+            if (keys['ArrowLeft'] || keys['a'] || keys['A']) platform.vx = -platform.speed;
+            if (keys['ArrowRight'] || keys['d'] || keys['D']) platform.vx = platform.speed;
+            
+            platform.x += platform.vx;
+            
+            // Boundary check
+            if (platform.x < 0) platform.x = 0;
+            if (platform.x > canvas.width - platform.width) platform.x = canvas.width - platform.width;
+
+            // Spawn processes
+            spawnTimer += 16;
+            if (spawnTimer > spawnInterval) {
+                processes.push(new Process());
+                spawnTimer = 0;
+                spawnInterval = Math.max(350, spawnInterval - 15);
+            }
+
+            // Update processes
+            for (let i = processes.length - 1; i >= 0; i--) {
+                const proc = processes[i];
+                proc.update();
+
+                // Check collision with platform
+                const procBottom = proc.y + proc.radius;
+                const procTop = proc.y - proc.radius;
+                const platformTop = platform.y;
+                const platformBottom = platform.y + platform.height;
+                const platformLeft = platform.x;
+                const platformRight = platform.x + platform.width;
+
+                if (procBottom >= platformTop && procTop <= platformBottom && 
+                    proc.x >= platformLeft && proc.x <= platformRight && !proc.caught) {
+                    // Caught!
+                    proc.caught = true;
+                    caught++;
+                    const points = proc.type === 'critical' ? 200 : 100;
+                    score += points;
+                    createExplosion(proc.x, proc.y, proc.type === 'critical');
+                    processes.splice(i, 1);
+                    
+                    caughtEl.textContent = caught;
+                    scoreEl.textContent = score;
+                    continue;
+                }
+
+                // Remove if fallen off screen
+                if (proc.y > canvas.height + 50) {
+                    processes.splice(i, 1);
+                    if (proc.type === 'critical') {
+                        score = Math.max(0, score - 300);
+                    } else {
+                        score = Math.max(0, score - 100);
+                    }
+                    scoreEl.textContent = score;
+                }
+            }
+
+            // Update particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+        }
+
+        function draw() {
+            // Clear canvas
+            ctx.fillStyle = '#F9FAFB';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw grid pattern
+            ctx.strokeStyle = 'rgba(0,148,211,0.08)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 40) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 40) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+
+            // Draw processes
+            processes.forEach(proc => proc.draw());
+
+            // Draw platform
+            drawPlatform();
+
+            // Draw particles
+            particles.forEach(p => p.draw());
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            if (gameRunning) {
+                animationId = requestAnimationFrame(gameLoop);
+            }
+        }
+
+        function startGame() {
+            gameRunning = true;
+            timeLeft = 60;
+            caught = 0;
+            score = 0;
+            processes = [];
+            particles = [];
+            spawnInterval = 1200;
+            platform.x = canvas.width / 2 - 60;
+            
+            timerEl.textContent = timeLeft;
+            caughtEl.textContent = '0';
+            scoreEl.textContent = '0';
+            overlay.classList.remove('active');
+            
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+            
+            gameLoop();
+        }
+
+        function endGame() {
+            gameRunning = false;
+            clearInterval(timerInterval);
+            cancelAnimationFrame(animationId);
+            
+            const isVictory = score > 3000;
+            overlayTitle.textContent = isVictory ? 'Победа! 🎉' : 'Время вышло!';
+            overlayTitle.className = 'overlay-title ' + (isVictory ? 'victory' : 'game-over');
+            overlayScore.textContent = `Поймано процессов: ${caught} | Счет: ${score}`;
+            overlay.classList.add('active');
+            
+            updateLeaderboard(score);
+        }
+
+        // Leaderboard data - MENTOR always first with 53600
+        const leaderboardData = [
+            { name: 'PROCESS MENTOR', score: 53600, isMentor: true },
+            { name: 'Александр CEO', score: 12400 },
+            { name: 'Елена COO', score: 10800 },
+            { name: 'Дмитрий PM', score: 9200 },
+            { name: 'Анна HRD', score: 7800 },
+            { name: 'Сергей CTO', score: 6500 },
+            { name: 'Марина CFO', score: 5400 },
+            { name: 'Иван TeamLead', score: 4200 },
+            { name: 'Ольга BA', score: 3100 },
+            { name: 'Новый стажер', score: 1800 }
+        ];
+
+        function updateLeaderboard(currentScore) {
+            // Add current player score if it's higher than last place
+            const playerEntry = { name: 'Вы', score: currentScore, isPlayer: true };
+            const allEntries = [...leaderboardData.filter(p => !p.isPlayer), playerEntry];
+            allEntries.sort((a, b) => b.score - a.score);
+            
+            // Keep only top 10, but ensure MENTOR stays if tied
+            const top10 = allEntries.slice(0, 10);
+            
+            // If MENTOR not in top 10, replace last with MENTOR
+            if (!top10.find(p => p.isMentor)) {
+                top10[9] = leaderboardData[0];
+                top10.sort((a, b) => b.score - a.score);
+            }
+            
+            renderLeaderboard(top10);
+        }
+
+        function renderLeaderboard(data) {
+            const tbody = document.getElementById('leaderboardBody');
+            tbody.innerHTML = '';
+            
+            data.forEach((player, index) => {
+                const row = document.createElement('div');
+                row.className = 'leaderboard-row';
+                if (player.isMentor) {
+                    row.className += ' first-place';
+                }
+                if (player.isPlayer) {
+                    row.style.background = 'rgba(16, 185, 129, 0.05)';
+                }
+                
+                const rank = index + 1;
+                const rankDisplay = rank === 1 ? '👑' : rank;
+                
+                row.innerHTML = `
+                    <div class="rank">${rankDisplay}</div>
+                    <div class="player-name">
+                        <div class="process-icon">${player.isMentor ? '👑' : (player.isPlayer ? '🎯' : '⚙️')}</div>
+                        ${player.name}
+                    </div>
+                    <div class="player-score">${player.score.toLocaleString()}</div>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Initialize
+        renderLeaderboard(leaderboardData);
+
+        // Resize handler
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            const maxWidth = Math.min(800, container.clientWidth - 48);
+            const scale = maxWidth / 800;
+            
+            canvas.style.width = maxWidth + 'px';
+            canvas.style.height = (500 * scale) + 'px';
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Initial state
+        draw();
+        overlayTitle.textContent = 'Готов спасти процессы?';
+        overlayTitle.className = 'overlay-title';
+        overlayScore.textContent = 'Лови сломанные процессы, пока не поздно!';
+        overlay.querySelector('button').textContent = 'Начать игру';
+        overlay.classList.add('active');
+    </script>
+</body>
+</html>
